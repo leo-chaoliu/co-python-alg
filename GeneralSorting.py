@@ -15,6 +15,34 @@ class StockItem:
     
     def toString(self):
         return "[%s|barcode=%8s|$=%.2f|S=%d]"%(self._name, self._barcode, self._price, self._stock)
+
+    def __eq__(self, other):
+        return self._price == other._price
+    
+    # override less than <
+    def __lt__(self, other):
+        if other is None:
+            return False
+        return self._price < other._price
+    # >
+    def __gt__(self, other):
+        if other is None:
+            return False
+
+        if self._price == other._price:
+            return self._stock < other._stock
+        
+        return self._price > other._price
+
+    # >= ge
+    def __ge__(self, other):
+        if other is None:
+            return False
+        
+        if self._price == other._price:
+            return self._stock <= other._stock
+        
+        return self._price >= other._price
     
 def swapElement(array, x, y):
     """
