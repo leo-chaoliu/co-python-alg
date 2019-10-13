@@ -19,6 +19,7 @@ class StockItem:
     def __eq__(self, other):
         return self._price == other._price
     
+    # Q: any way to implement comparable in a common method
     # override less than <
     def __lt__(self, other):
         if other is None:
