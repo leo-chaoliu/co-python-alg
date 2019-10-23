@@ -65,22 +65,33 @@ class Deck():
         """ Randomize the cards in the deck """
         randomCards=[]
        
+    #    for i range(51,-1,-1):
+    #         random_index=random.randint(0,i)
+    #         randomCards.append(self.cards[random_index])
+    #         self.cards.remove(self.cards[random_index])
+
         i=51
         while i >-1:
             random_index=random.randint(0,i)
             randomCards.append(self.cards[random_index])
             self.cards.remove(self.cards[random_index])
             i=i-1
+        
         # return randomCards
         self.cards = randomCards
 
     def takeCard(self):
         """ Return one Card from the top of deck. Card is removed from Deck. """
-        return None
+        
+        return_card=self.cards[-1]
+        self.cards.remove(self.cards[-1])
+        return return_card
+        # return self.cards.pop()
 
     def getSize(self):
         """ Return the number of remaining cards in the deck """ 
-        return 0
+        # return self.cards
+        return len(self.cards)
 
     def toString(self):
         """ Print the deck from top to bottom.
@@ -116,19 +127,25 @@ def main():
     print(d.toString())
 
     # #Simple code to get two power hands
-    # pokerhand = [d.takeCard() for i in range(5)]
-    # print("First poker hand:")
-    # for c in pokerhand:
-    #     print(c.toString())
- 
+    pokerhand = [d.takeCard() for i in range(5)]
+    
+    # hand = []
+    # for i in range(5):
+    #     hand.append(d.takeCard())
 
-    # pokerhand = [d.takeCard() for i in range(5)]
-    # print("\nSecond poker hand:")
-    # for c in pokerhand:
-    #     print(c.toString())
+    print("First poker hand:")
+    # card object
+    for c in pokerhand:
+        print(c.toString())
+    
+
+    pokerhand = [d.takeCard() for i in range(5)]
+    print("\nSecond poker hand:")
+    for c in pokerhand:
+        print(c.toString())
     
     
-    # print("Deck has %d cards at the end"%(d.getSize()))
+    print("Deck has %d cards at the end"%(d.getSize()))
 
 
 if __name__ == "__main__":
