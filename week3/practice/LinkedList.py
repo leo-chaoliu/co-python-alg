@@ -86,7 +86,19 @@ class LinkedList:
         return pre_node
 
     def __str__(self):
-        return "LinkedList: head: {0}, size: {1}".format(self.head, self.size)
+        result = ""
+        cursor = self.head
+
+        # while cursor.next is not None:
+        #     result += "{} -> ".format(cursor.item)
+        #     cursor = cursor.next
+
+        for i in range(1, self.size+1):
+            result += "{} ->".format(cursor.item)
+            cursor = cursor.next
+        
+        # return "LinkedList: head: {0}, size: {1}".format(self.head, self.size)
+        return result
 
 
 def test_cases():

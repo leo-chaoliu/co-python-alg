@@ -4,12 +4,14 @@ class SinglyNode:
         self.next = link
 
     def toString(self):
-        return "[Node: item: {0} next {1} next next: {2}".format(self.item, self.next.item, self.next.next.item)
+        pass
+        
 
 class LinkLinkedList():
     def __init__(self):
         self.head = None
         self.size = 0
+        
 
     def _Traversal(self,position):
         ptr = self.head
@@ -51,7 +53,12 @@ class LinkLinkedList():
     
     
     def toString(self):
-        return "head : {}".format(self.head.toString())
+        result = ""
+        cur=self.head
+        for i in range(0,self.size):
+            result += "{} -> ".format(cur.item)
+            cur = cur.next
+        return result
 
 
 
