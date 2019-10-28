@@ -7,10 +7,6 @@ class SinglyNode:
         return "[SinglyNode: item: {0}, next: {1}]".format(self.item, self.next.item if self.next else self.next)
 
 
-class LinkedListArray:
-    def _init__(self):
-        pass
-
 
 class LinkedList:
     def __init__(self):
