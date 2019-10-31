@@ -40,8 +40,15 @@ class Josephine:
         result = []
         K = K % self.princes.size
 
+        # if K == 0:
+        #     K = -1
+
         while self.princes.size > 1:
-            removed_value = self.princes.remove(K)
+            if K !=0:
+                removed_value = self.princes.remove(K)
+            else:
+                removed_value = self.princes.remove(self.princes.size)
+
             result.append(removed_value)
         
         result.append(self.princes.head.item)
@@ -67,7 +74,7 @@ def main():
     j = Josephine(4)
     print(j.toString())
 
-    print(j.chosenOne(2))
+    print(j.chosenOne(4))
 
 
 if __name__ == "__main__":
