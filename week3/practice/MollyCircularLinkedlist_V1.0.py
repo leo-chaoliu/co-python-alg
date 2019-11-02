@@ -17,10 +17,6 @@ class CircularLinkedList():
     def _Traversal(self,position):
         # travel to key-in position 
         ptr = self.pointer
-
-        if position == 0:
-            return self.tail
-        
         for i in range (1,position): # test later
             # To handle special case (1 item only) 
             if ptr.next == None:
@@ -70,44 +66,43 @@ class CircularLinkedList():
     #     while cur.head != self.head:
     #         cur = current.head
     
+    ## poninter = removedNode.next
     def remove(self,position):
         # protection if 
         # if position == 0 or position > self.size:
-        #     print("position == 0 or position > self.size, {0}, {1}".format(position, self.size))
-        #     return False
+            # return False
         # detele head item
 
         removed_value = None
-
-        prev = self._Traversal(position-1)
-        print("prev node: {}", prev.item)
-        cur = prev.next 
         
-        if cur == self.head:
-            cur = self.head
-            removed_value = cur.item
+        # if position == 1:
 
-            self.head = cur.next
-            self.pointer = self.head
-            self.tail.next = self.head
+        #     cur = self.head
+        #     removed_value = cur.item
 
-        # delete end item
-        elif cur == self.tail:
-            prev = self._Traversal(position-1)
-            removed_value = prev.next.item
+        #     self.head = cur.next
+        #     self.pointer = self.head 
+        #     self.tail.next = self.head
 
-            prev.next = self.head
-            self.tail = prev
-            self.pointer = self.head
-        # delete Kth position item 
-        else:
-            prev = self._Traversal(position-1)
-            cur = prev.next
-            removed_value = cur.item
+        # # delete end item
+        # elif position == self.size:
+        #     prev = self._Traversal(position-1)
+        #     removed_value = prev.next.item
+  
+        #     prev.next = self.head
+        #     self.tail = prev
+        #     self.pointer = self.head 
+        # # delete Kth position item 
+        # else:
+        prev = self._Traversal(position-1)
+        cur = prev.next
+        removed_value = cur.item
 
-            prev.next = cur.next
-            self.pointer = prev.next
+        prev.next = cur.next
+        self.pointer = prev.next
         self.size -=1
+
+        print('removed {}'.format(removed_value))
         return removed_value
         
 

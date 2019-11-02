@@ -1,4 +1,3 @@
-
 """
 For IT5003 Lab - by SYJ 
 
@@ -38,17 +37,11 @@ class Josephine:
             e.g. [2, 4, 3, 1] with N = 4, K = 2, the last prince is the chosen one.
         """
         result = []
-        K = K % self.princes.size
-
-        # if K == 0:
-        #     K = -1
+        # K = K % self.princes.size
 
         while self.princes.size > 1:
-            if K !=0:
-                removed_value = self.princes.remove(K)
-            else:
-                removed_value = self.princes.remove(self.princes.size)
-
+            removed_value = self.princes.remove(K)
+            print('removed_value: ', removed_value)
             result.append(removed_value)
         
         result.append(self.princes.head.item)
@@ -71,10 +64,10 @@ def main():
     # N = int(input("N = "))
     # K = int(input("K = "))
 
-    j = Josephine(4)
+    j = Josephine(20)
     print(j.toString())
 
-    print(j.chosenOne(4))
+    print(j.chosenOne(1314))
 
 
 if __name__ == "__main__":
