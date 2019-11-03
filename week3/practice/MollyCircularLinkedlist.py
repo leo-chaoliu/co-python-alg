@@ -107,16 +107,20 @@ class CircularLinkedList():
 
             prev.next = cur.next
             self.pointer = prev.next
+            
         self.size -=1
+
         return removed_value
         
 
     def toString(self):
         result = ""
         cur=self.head
+
         for i in range(0,self.size):
             result += "{} -> ".format(cur.item)
             cur = cur.next
+
         return result
 
 

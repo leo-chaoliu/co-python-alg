@@ -5,7 +5,7 @@ Version 1.0 (2019 October)
 - Singly Node is reused from Linked List implementations.
 """
 
-from MollyCircularLinkedlist import CircularLinkedList
+from MollyCircularLinkedListWithoutHeadWithPointer import CircularLinkedList
 
 class SinglyNode:
     def __init__(self, item, link = None):
@@ -27,9 +27,8 @@ class Josephine:
         for i in range(1, N+1):
             #Encapsulation
             prince_i = SinglyNode(i)
-            self.princes.insert(prince_i,i)
+            self.princes.insert(i,prince_i)
 
-        pass    #replace with your code
 
     def chosenOne(self, K):
         """ Return a list of princes in the order they are removed.
@@ -37,14 +36,18 @@ class Josephine:
             e.g. [2, 4, 3, 1] with N = 4, K = 2, the last prince is the chosen one.
         """
         result = []
-        # K = K % self.princes.size
 
         while self.princes.size > 1:
+            k_mod = K % self.princes.size
+
+            if k_mod == 0:
+                k_mod = self.princes.size
+
             removed_value = self.princes.remove(K)
             print('removed_value: ', removed_value)
             result.append(removed_value)
         
-        result.append(self.princes.head.item)
+        result.append(self.princes.pointer.item)
 
         return result   #replace with your code
 
@@ -64,10 +67,10 @@ def main():
     # N = int(input("N = "))
     # K = int(input("K = "))
 
-    j = Josephine(20)
+    j = Josephine(4)
     print(j.toString())
 
-    print(j.chosenOne(1314))
+    print(j.chosenOne(777))
 
 
 if __name__ == "__main__":
