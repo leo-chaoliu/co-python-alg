@@ -40,7 +40,7 @@ def makeSorted( input ):
         
         else:
             
-            while input[i] >= storeStack.getTop():
+            while storeStack.getTop()!= None and input[i] >= storeStack.getTop():
                 temp = storeStack.getTop()
                 storeStack.pop()
                 changeStack.push(temp)
@@ -48,15 +48,14 @@ def makeSorted( input ):
             storeStack.push(input[i])
            
             for k in range(changeStack.size()):
-                temp = storeStack.getTop()
+                temp = changeStack.getTop()
                 changeStack.pop()
                 storeStack.push(temp)
     
     for i in range(storeStack.size()):
         temp = storeStack.getTop()
-        storeStack.pop()
         result.append(temp)
-
+        storeStack.pop()
     #You can have code outside of the loop if needed
 
     return result
@@ -64,11 +63,11 @@ def makeSorted( input ):
 
 
 def main():
-    # sList = input("Give a list of numbers: ").split(" ")
-    # numList = [int(s) for s in sList]
-    #numList is a list of numbers now
-    # result = makeSorted(numList)
-    result = makeSorted([4,8,6,5,9,7])
+    sList = input("Give a list of numbers: ").split(" ")
+    numList = [int(s) for s in sList]
+    # numList is a list of numbers now
+    result = makeSorted(numList)
+   
     
 
     print(numList)
