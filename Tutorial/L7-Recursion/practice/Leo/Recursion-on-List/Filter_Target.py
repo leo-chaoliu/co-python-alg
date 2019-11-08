@@ -1,5 +1,5 @@
 
-def filter_Target(L, target):
+def filter_Target_Unwinding(L, target):
     '''
 
     ''' 
@@ -12,8 +12,8 @@ def filter_Target(L, target):
         return []
     
     # reduced problem 
-    last_number = L.pop();
-    ans = filter_Target(L, target)
+    last_number = L.pop()
+    ans = filter_Target_Unwinding(L, target)
 
     if last_number == target:
         return ans
@@ -21,7 +21,14 @@ def filter_Target(L, target):
         ans.append(last_number)
         return ans
 
-def filter_Target_Winding(L, target):
+def filter_Target_Winding_Wrapper(L, target):
+    result = []
+    filter_Target_Winding(L, target, result)
+  
+    return result
+    pass
+
+def filter_Target_Winding(L, target, result):
     
     if len(L) == 0:
         return []
@@ -29,20 +36,19 @@ def filter_Target_Winding(L, target):
     # get the first number and remove it from the list
     first_number = L.pop(0)
 
-    if first_number == target:
-        print("Equal")
-    else:
-        print(first_number)
+    if first_number != target:
+        result.append(first_number)
+        
+    ans = filter_Target_Winding(L, target, result)
 
-    ans = filter_Target_Winding(L, target)
-
-    
     pass
 
 def main():
-    print(filter_Target([4,2,3,4,2],4))
+    print(filter_Target_Unwinding([4,2,3,4,2,7],4))
+    print(filter_Target_Winding_Wrapper([4,2,3,4,2,7],4))
     pass
 
 if  __name__ == "__main__":
     main()
     pass
+
