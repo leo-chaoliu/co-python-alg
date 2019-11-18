@@ -93,7 +93,25 @@ class BSTRef:
         """
         Internal recursive method that carries out the deletion algorithm.
         """
-        return T    #incomplete implementation
+        # protection if 
+        if T == None:
+            return False
+        # case 1: no child 
+        elif T.leftT == None and T.rightT == None:
+            return None 
+        # case 2: one child
+        elif T.leftT == None:
+            return T.rightT
+        elif T.rightT == None:
+            return T.leftT
+        # case 3: two children
+        else:
+            s = self._findMin(T.rightT)
+            T.key = s.key
+            T.data = s.data
+            self._delete(T.rightT,s.key)
+            
+        return T    
 
     def delete(self, key):
         """
@@ -108,14 +126,23 @@ class BSTRef:
         """
         if T == None:
             return "-"
-        return "{ %s "%(T.key) + self._preorder(T.leftT) \
-            + " " + self._preorder(T.rightT) + " } "
+        
+        r1 = "{ %s "%(T.key)
+        r2 = self._preorder(T.leftT)
+        r3 = self._preorder(T.rightT) + " } "
+
+        result = "{0}{1} {2}".format(r1, r2, r3)
+
+        return result
 
     def _inorder(self, T):
         """
         Internal recursive method to perform In-Order Traversal.
         """
-        return "" #Incomplete Implementation
+        if T == None:
+            return "-"
+        return self._inorder(T.leftT) + "{ %s "%(T.key) \
+            + " " + self._inorder(T.rightT) + " } "
 
     def _postorder(self, T):
         """
@@ -154,8 +181,8 @@ def main():
     print(bt.traversal(Traversal.POST))
     print("Min = "+str(bt.findMinElement()))
 
-    # bt.delete(4)
-    # print(bt.traversal(Traversal.PRE))
+    bt.delete(4)
+    print(bt.traversal(Traversal.PRE))
 
     # bt.delete(3)
     # print(bt.traversal(Traversal.PRE))
