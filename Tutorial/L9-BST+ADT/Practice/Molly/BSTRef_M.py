@@ -177,33 +177,27 @@ class BSTRef:
         result = "{} {} {}".format(r1,r2,r3)
         return result
 
+    def prettyPrint(self, T):
+        self._prettyPrint(T, 0)
+        pass
 
-    def _prettyPrint(self, T):
+    def _prettyPrint(self, T, height):
         """
         Internal recursive method to perform prettyPrint Traversal.
         """
         if T == None:
-            return None
+            return height
        
-        # r1 = "   " + self._prettyPrint(T.rightT) + "\n"
-        # r2 = "{}---".format(T.key) + "\n"
-        # r3 = "   " + self._prettyPrint(T.leftT) + "\n"
-        
-        # result = "{} {} {}".format(r1,r2,r3)
-        # return result
-
-        self._prettyPrint(T.rightT)
+        self._prettyPrint(T.rightT, height+1)
 
         dash = ""
-        space = ""
-
         if T.leftT != None or T.rightT != None:
             dash = "---"
 
-        print("{0}{1}{2}".format(space,T.key,dash))
-        
-        self._prettyPrint(T.leftT)
+        spacing = height * "    "
+        print("{0}{1}{2}".format(spacing,T.key,dash))
 
+        self._prettyPrint(T.leftT, height+1)
 
     def traversal(self, which):
         """
@@ -231,10 +225,10 @@ def main():
     bt.insert(2,"Two")
     bt.insert(6,"Six")
     
-    # bt._prettyPrint(bt._root)
+    bt.prettyPrint(bt._root)
 
     # print(bt.traversal(Traversal.PRE))
-    print(bt.traversal(Traversal.IN))
+    # print(bt.traversal(Traversal.IN))
     # print(bt.traversal(Traversal.POST))
     # print(bt.traversal(Traversal.PRETTY))
     # print("Min = "+str(bt.findMinElement()))
