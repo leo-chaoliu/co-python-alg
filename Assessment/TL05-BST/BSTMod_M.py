@@ -127,8 +127,24 @@ class BSTMod:
         Rebuild and return the BST from [L]. 
         """
         #Your Part (a) solution here
+        
+        if L == []:
+            return None
 
-        return None   #modify accordingly
+        root = TreeNode(L[0],L[0])
+
+        n = len(L)
+
+        # find the index of the boundary of left subtree and right subtree
+        idx = 0
+        for i in range(1,n):
+            if L[i] < L[0]:
+                idx += 1
+
+        root.leftT = self._buildBSTfromPreorder(L[1:idx+1])
+        root.rightT = self._buildBSTfromPreorder(L[idx+1:n])
+
+        return root   #modify accordingly
     
     def buildBSTfromPreorder(self, L ):
         """ 
@@ -139,13 +155,31 @@ class BSTMod:
         self._root = self._buildBSTfromPreorder(L)
         self._size = len(L)
 
+    def _buildBSTfromRandomlist(self,L):
+        n = len(L)  
+
+        for i in range(0,n):
+            self.insert(L[i],L[i])
+    
     def _buildBSTfromSortedList(self, L):
         """
         Internal helper method to build a BST from sorted list
         """
         #Your Part (b) solution here
 
-        return None   #modify accordingly
+        if L == []:
+            return None
+        
+        n = len(L)
+
+        rootIdx = n//2
+
+        root = TreeNode(L[rootIdx],L[rootIdx]) 
+
+        root.leftT = self._buildBSTfromSortedList(L[0:rootIdx])
+        root.rightT = self._buildBSTfromSortedList(L[rootIdx+1:])
+
+        return root   #modify accordingly
 
 
     def buildBalancedBST( self,  L ):
@@ -156,7 +190,11 @@ class BSTMod:
         """
 
         #Your Part (b) solution here. 
-
+        
+        self._buildBSTfromRandomlist(L)
+        sortedList = self.traversal(Traversal.IN)
+        self._root = self._buildBSTfromSortedList(sortedList)
+        
         #Need to figure out how to use the recursive _buildBSTFromSortedList() above
 
 def main():
@@ -167,9 +205,10 @@ def main():
     # bt.buildBSTfromPreorder([5, 3, 1, 2, 4, 8, 6, 7, 9])
 
     # Part B test below
-    #bt.buildBalancedBST([2, 4, 7, 8, 1, 5, 6, 3, 9])
+    bt.buildBalancedBST([2, 4, 7, 8, 1, 5, 6, 3, 9])
+    # bt.buildBalancedBST([1, 2, 3, 4, 5, 6, 7, 8, 9])
 
-    print(bt.traversal(Traversal.PRE))
+    print(bt.traversal(Traversal.IN))
 
 if __name__ == "__main__":
     main()

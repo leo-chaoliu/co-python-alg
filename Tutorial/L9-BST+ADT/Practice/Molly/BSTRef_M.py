@@ -48,7 +48,7 @@ class BSTRef:
         """
         Return size of the BST, i.e. number of datas in BST.
         """
-        return len(self._size)
+        return self._size
 
     def _findMin( self, T ):
         if T == None:
@@ -95,29 +95,43 @@ class BSTRef:
         """
         # protection if 
         if T == None:
-            return False
-        # case 1: no child 
-        elif T.leftT == None and T.rightT == None:
-            return None 
-        # case 2: one child
-        elif T.leftT == None:
-            return T.rightT
-        elif T.rightT == None:
-            return T.leftT
-        # case 3: two children
-        else:
-            s = self._findMin(T.rightT)
-            T.key = s.key
-            T.data = s.data
-            self._delete(T.rightT,s.key)
+            raise KeyError("Cannot Find Key Error")
+        
+        # Find the deletion location
+        if T.key < key:
+            T.rightT = self._delete(T.rightT,key)
+            return T
             
-        return T    
+        elif T.key > key:
+            T.leftT = self._delete(T.leftT,key)
+            return T
+         
+        # Arrived the deletion location
+        else:    
+            
+            # case 1: no child 
+            if T.leftT == None and T.rightT == None:
+                return None
+                
+            # case 2: one child
+            elif T.leftT == None and T.rightT != None:
+                return T.rightT
+           
+            elif T.rightT == None and T.leftT != None:
+                return T.leftT
+          
+            # case 3: two children
+            else:
+                s = self._findMin(T.rightT)
+                T.key = s.key
+                T.data = s.data
+                self._delete(T.rightT,s.key)
 
     def delete(self, key):
         """
         Detele node with [key] from BST.
         """
-        self._root = self._delete( self._root, key)
+        self._delete(self._root,key)
         self._size -= 1
     
     def _preorder(self, T):
@@ -141,14 +155,55 @@ class BSTRef:
         """
         if T == None:
             return "-"
-        return self._inorder(T.leftT) + "{ %s "%(T.key) \
-            + " " + self._inorder(T.rightT) + " } "
+
+        r1 = "{ " + self._inorder(T.leftT)
+        r2 = "{}".format(T.key)
+        r3 = self._inorder(T.rightT) + " } "
+        
+        result = "{} {} {}".format(r1,r2,r3)
+        return result
 
     def _postorder(self, T):
         """
         Internal recursive method to perform Post-Order Traversal.
         """
-        return "" #Incomplete Implementation
+        if T == None:
+            return "-"
+
+        r1 = "{ " + self._postorder(T.leftT)
+        r2 = self._postorder(T.rightT)
+        r3 = "{}".format(T.key) + " } "
+       
+        result = "{} {} {}".format(r1,r2,r3)
+        return result
+
+
+    def _prettyPrint(self, T):
+        """
+        Internal recursive method to perform prettyPrint Traversal.
+        """
+        if T == None:
+            return None
+       
+        # r1 = "   " + self._prettyPrint(T.rightT) + "\n"
+        # r2 = "{}---".format(T.key) + "\n"
+        # r3 = "   " + self._prettyPrint(T.leftT) + "\n"
+        
+        # result = "{} {} {}".format(r1,r2,r3)
+        # return result
+
+        self._prettyPrint(T.rightT)
+
+        dash = ""
+        space = ""
+
+        if T.leftT != None or T.rightT != None:
+            dash = "---"
+
+        print("{0}{1}{2}".format(space,T.key,dash))
+        
+        self._prettyPrint(T.leftT)
+
 
     def traversal(self, which):
         """
@@ -175,19 +230,22 @@ def main():
     bt.insert(9,"Nine")
     bt.insert(2,"Two")
     bt.insert(6,"Six")
+    
+    # bt._prettyPrint(bt._root)
 
-    print(bt.traversal(Traversal.PRE))
+    # print(bt.traversal(Traversal.PRE))
     print(bt.traversal(Traversal.IN))
-    print(bt.traversal(Traversal.POST))
-    print("Min = "+str(bt.findMinElement()))
+    # print(bt.traversal(Traversal.POST))
+    # print(bt.traversal(Traversal.PRETTY))
+    # print("Min = "+str(bt.findMinElement()))
 
-    bt.delete(4)
-    print(bt.traversal(Traversal.PRE))
+    # bt.delete(4)
+    # print(bt.traversal(Traversal.PRE))
 
     # bt.delete(3)
     # print(bt.traversal(Traversal.PRE))
 
-    # bt.delete(1)
+    # bt.delete(1) 
     # print(bt.traversal(Traversal.PRE))
 
     # bt.delete(8)
