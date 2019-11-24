@@ -172,7 +172,7 @@ class AVLMod:
                 T.key = successor.key
                 T.data = successor.data
                 T.rightT = self._delete( T.rightT, successor.key )
-        return T
+        return self._balance(T)
 
     def delete(self, key):
         """
@@ -301,7 +301,10 @@ def main():
     # Test AVL insertion
     avlT = buildTree([1, 2, 3, 4, 5, 6, 7,8])
     avlT.prettyPrint()
-    print(avlT.traversal(Traversal.IN))
+    avlT.delete(3)
+    avlT.delete(5)
+    avlT.prettyPrint()
+    # print(avlT.traversal(Traversal.IN))
 
     # Manual test
     # avlT = AVLMod()

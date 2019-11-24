@@ -17,15 +17,28 @@ def quadraticProbe( m, k ):
 
 def doubleHashing( m, k, p ):
     """ Return the double hashing probe sequence as a Python List."""
-    return []
+    
+    result = []
+   
+    h = k%m
+    h2 = (k%p) + 1
+
+    for i in range(0,m):
+        temp = h + (i*h2)%m
+        if temp >= m:
+            temp = temp - m
+        result.append(temp)
+
+    return result
+
 
 
 def main():
-    print(linearProbe(11, 35))
-    print(linearProbe(7, 35))
+    # print(linearProbe(11, 35))
+    # print(linearProbe(7, 35))
 
-    print(quadraticProbe(11, 35))
-    print(quadraticProbe(7, 35))
+    # print(quadraticProbe(11, 35))
+    # print(quadraticProbe(7, 35))
 
     print(doubleHashing(11, 35, 4))
     print(doubleHashing(7, 35, 4))
