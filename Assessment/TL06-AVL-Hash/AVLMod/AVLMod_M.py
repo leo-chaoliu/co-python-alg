@@ -260,25 +260,28 @@ class AVLMod:
         BF = T.balanceFactor()
 
         if BF == 2:
-            BF_leftT = T.balanceFactor()
+            BF_leftT = T.leftT.balanceFactor()
+            
             if BF_leftT == 1 or BF_leftT == 0:
-                self._rotateRight(T)  
-            else: 
-                self._rotateLeft(T.leftT)
-                self._rotateRight(T)
-        else: 
-            BF_rightT = T.balanceFactor()
-            if BF_rightT == -1 or BF_rightT == 0:
-                self._rotateLeft(T)
+                T = self._rotateRight(T)  
             else:
-                self._rotateRight(T.rightT)
-                self._rotateLeft(T)
+                T.leftT = self._rotateLeft(T.leftT)
+                T = self._rotateRight(T)
+        elif BF == -2: 
+            BF_rightT = T.rightT.balanceFactor()
+
+            if BF_rightT == -1 or BF_rightT == 0:
+                T = self._rotateLeft(T)
+            else:
+                T.rightT = self._rotateRight(T.rightT)
+                T = self._rotateLeft(T)
 
         return T
 
         # Check Balance Factor and perform rotations if necessary
         # Incomplete:
-        #   Check the Balance factor, call the necessary rotation(s) to correct the issue
+        #   Check the Balance factor, call the n
+        # ecessary rotation(s) to correct the issue
 
 
 def buildTree( L ):
@@ -296,9 +299,9 @@ def buildTree( L ):
 def main():
 
     # Test AVL insertion
-    avlT = buildTree([1, 2, 3, 4, 5, 6, 7])
+    avlT = buildTree([1, 2, 3, 4, 5, 6, 7,8])
     avlT.prettyPrint()
-    print(avlT.traversal(Traversal.POST))
+    print(avlT.traversal(Traversal.IN))
 
     # Manual test
     # avlT = AVLMod()
