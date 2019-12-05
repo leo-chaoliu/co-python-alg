@@ -258,24 +258,35 @@ class BSTRef:
         return sum_
         pass
 
-    def _flipTree(self, T):
-        if T == None:
-            return None
+    def _flipTree(self, oldT, newT):
+        if oldT == None:
+            return
         
-        root = TreeNode(T.key, T.data)
-        root.leftT = self._flipTree(T.rightT)
-        root.rightT = self._flipTree(T.leftT)
+        if oldT.rightT == None and oldT.leftT == None:
+            # copy the value as a new node
+            return TreeNode(oldT.key, oldT.data)
 
-        # in recursion, is the point to unwinding 
-        return root
-        pass
+        if newT.leftT != None:
+            newT.rightT = TreeNode(oldT.leftT.key, oldT.leftT.data)
         
+        self._flipTree(oldT.leftT, newT)
+        # newT = TreeNode(oldT.key, oldT.data)
+        newT.leftT = self._flipTree(oldT.rightT, newT)
+
+        return newT
+        pass
 
     def flipTree(self):
         '''
         return the mirror image of T
         '''
-        return self._flipTree(self._root)
+
+        # root remains the same 
+        newTree = TreeNode(self._root.key, self._root.data)
+
+        flippedTree = self._flipTree(self._root, newTree)
+
+        return flippedTree
         pass
 
 def main():
@@ -315,7 +326,7 @@ def main():
 
     flippedTree = bt.flipTree()
 
-    print('\nFlipped Tree')
+    print('Flipped Tree')
     bt._prettyPrint(flippedTree, 0)
 
 
