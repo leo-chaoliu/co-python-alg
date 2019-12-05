@@ -100,11 +100,11 @@ class BSTRef:
         # Find the deletion location
         if T.key < key:
             T.rightT = self._delete(T.rightT,key)
-            return T
+            # return T
             
         elif T.key > key:
             T.leftT = self._delete(T.leftT,key)
-            return T
+            # return T
          
         # Arrived the deletion location
         else:    
@@ -125,7 +125,8 @@ class BSTRef:
                 s = self._findMin(T.rightT)
                 T.key = s.key
                 T.data = s.data
-                self._delete(T.rightT,s.key)
+                T.rightT = self._delete(T.rightT,s.key)
+            return T
 
     def delete(self, key):
         """

@@ -2,19 +2,22 @@ from abc import ABC, abstractmethod     #Abstract Base Class
 from enum import Enum
 from BSTBase import *   #import both BSTBase and the Traversal Enum
 
-"""
-For IT5003 - by SYJ 
-
-Version 1.0 (2019 October)
-- BSTRef ADT implemented using reference
-- TreenNode class for the reference based tree node
-
-Student Version
-- Certain method is left empty for your own practice
-
-- Basic documentation only
 
 """
+For IT5003 - by SYJ & Leo & Molly
+"""
+
+class Traversal(Enum):
+    """
+    Enumeration for more readable code.
+
+    Represent the four possible Binary Tree Traversals.
+    """
+    IN = 1
+    PRE = 2
+    POST = 3
+    LEVEL = 4
+
 
 class TreeNode:
     """
@@ -151,7 +154,7 @@ class BSTRef:
         """
         self._delete(self._root, key)
         self._size -= 1
-        print('Deleted {}'.format(key))
+        print('Deleted {}\n'.format(key))
 
     def _preorder(self, T):
         """
@@ -196,19 +199,27 @@ class BSTRef:
         result = "{} {} {}".format(r1,r2,r3)
         return result
 
+    def levelOrder(self):
+        pass
+
     def traversal(self, which):
         """
         Print the BST by the specified traversal.
 
         [which] should be one of the Enumeration in the Traversal Enum class
         """
+        print('\nTraveling, method: {}'.format(which))
+
         if which == Traversal.PRE:
             return "[%d nodes]="%self._size+self._preorder(self._root) 
         elif which == Traversal.IN:
             return "[%d nodes]="%self._size+self._inorder(self._root)
         elif which == Traversal.POST:
             return "[%d nodes]="%self._size+self._postorder(self._root)
+        elif which == Traversal.LEVEL:
+            return self.levelOrder()
 
+    # interface function 
     def prettyPrint(self):
         self._prettyPrint(self._root, 0)
         pass
@@ -270,7 +281,6 @@ class BSTRef:
         return root
         pass
         
-
     def flipTree(self):
         '''
         return the mirror image of T
@@ -294,29 +304,27 @@ def main():
     print(bt.traversal(Traversal.PRE))
     print(bt.traversal(Traversal.IN))
     print(bt.traversal(Traversal.POST))
+    print(bt.traversal(Traversal.LEVEL))
+
     print("Min = "+str(bt.findMinElement()))
-    bt.prettyPrint()
-
     
-    print(bt.traversal(Traversal.PRE))
-
-    # bt.delete(3)
-    # print(bt.traversal(Traversal.PRE))
-
-    # bt.delete(1) 
-    # print(bt.traversal(Traversal.PRE))
-
-    # bt.delete(8)
-    # print(bt.traversal(Traversal.PRE))
-
     bt.prettyPrint()
 
     bt.pathSum()
+
+    bt.prettyPrint()
+
+    bt.delete(3)
+    bt.delete(8)
+
+    bt.prettyPrint()
 
     flippedTree = bt.flipTree()
 
     print('\nFlipped Tree')
     bt._prettyPrint(flippedTree, 0)
+
+    
 
 
 
