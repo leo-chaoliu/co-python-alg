@@ -1,5 +1,7 @@
-idea
-# Byte-compiled / optimized / DLL files
+ idea/
+ .idea/
+ .vs/
+ vs/
  __pycache__/
  *.pyc
  .vscode/
