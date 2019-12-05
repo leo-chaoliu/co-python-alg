@@ -4,3 +4,13 @@
 
 1. Start with Capital letter
 2. Use singular for Nouns
+
+## Git command
+
+Make Git "forget" about a file/folder that was tracked but in now in .gitignore
+
+```
+git rm --cached <file>
+
+git rm -r cached <folder>
+```

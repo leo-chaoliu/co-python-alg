@@ -2,4 +2,7 @@ idea
 # Byte-compiled / optimized / DLL files
  __pycache__/
  *.pyc
- .vscode/*
+ .vscode/
+
+ # Whitelist some files
+ !.vscode/launch.json
