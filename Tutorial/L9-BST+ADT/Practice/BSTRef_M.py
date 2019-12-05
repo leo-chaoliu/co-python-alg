@@ -224,26 +224,28 @@ def main():
     bt.insert(9,"Nine")
     bt.insert(2,"Two")
     bt.insert(6,"Six")
-    
+
+    print(bt.traversal(Traversal.PRE))
+    print(bt.traversal(Traversal.IN))
+    print(bt.traversal(Traversal.POST))
+    print("Min = "+str(bt.findMinElement()))
     bt.prettyPrint(bt._root)
 
-    # print(bt.traversal(Traversal.PRE))
-    # print(bt.traversal(Traversal.IN))
-    # print(bt.traversal(Traversal.POST))
-    # print(bt.traversal(Traversal.PRETTY))
-    # print("Min = "+str(bt.findMinElement()))
+    
+    print(bt.traversal(Traversal.PRE))
 
-    # bt.delete(4)
-    # print(bt.traversal(Traversal.PRE))
-
-    # bt.delete(3)
-    # print(bt.traversal(Traversal.PRE))
+    bt.delete(3)
+    print(bt.traversal(Traversal.PRE))
 
     # bt.delete(1) 
     # print(bt.traversal(Traversal.PRE))
 
     # bt.delete(8)
     # print(bt.traversal(Traversal.PRE))
+
+    bt.prettyPrint(bt._root)
+
+
 
 if __name__ == "__main__":
     main()
