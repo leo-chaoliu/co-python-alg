@@ -14,3 +14,6 @@ git rm --cached <file>
 
 git rm -r cached <folder>
 ```
+
+Todo:
+git stash pop in Molly's com and merge with lecture-base branch
