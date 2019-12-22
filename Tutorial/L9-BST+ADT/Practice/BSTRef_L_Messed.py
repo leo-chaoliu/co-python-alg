@@ -51,16 +51,22 @@ class BSTRef:
         return self._size
 
     def _findMin( self, T ):
+        # goes down until reach the left bottom one
+        # which is the min in BST
+
         if T == None:
             return None
         if T.leftT == None:
             return T
+        
         return self._findMin( T.leftT )
 
     def findMinElement( self ):
         """
         Return the (key, data) for the node with smallest key.
         """
+        # a wrapper function, to show the common interface
+
         target = self._findMin(self._root)
         return (target.key, target.data)
     
@@ -74,6 +80,7 @@ class BSTRef:
         if T.key == key:
             raise KeyError("Duplicate Key!")
         elif T.key < key:
+            # rember to assign the value back
             T.rightT = self._insert( T.rightT, key, data )
         else:
             T.leftT  = self._insert( T.leftT, key, data )
@@ -98,13 +105,14 @@ class BSTRef:
             raise KeyError("Cannot Find Key Error")
         
         # Find the deletion location
+        # Using Binary search
+        # Remember to return T back
+
         if T.key < key:
             T.rightT = self._delete(T.rightT,key)
-            return T
-            
+
         elif T.key > key:
             T.leftT = self._delete(T.leftT,key)
-            return T
          
         # Arrived the deletion location
         else:    
@@ -121,19 +129,30 @@ class BSTRef:
                 return T.leftT
           
             # case 3: two children
+            # re-construct a new root 
+            # using the min of the rightT
+            # or using the max of the leftT
             else:
                 s = self._findMin(T.rightT)
                 T.key = s.key
                 T.data = s.data
-                self._delete(T.rightT,s.key)
+
+                # delete the duplication
+                # since is the min value, it should has only rightT or no leaf
+                # remember to assign it back !
+                T.rightT = self._delete(T.rightT,s.key)
+
+        # always return the current T back 
+        return T
 
     def delete(self, key):
         """
         Detele node with [key] from BST.
         """
-        self._delete(self._root,key)
+        self._delete(self._root, key)
         self._size -= 1
-    
+        print('Deleted {}'.format(key))
+
     def _preorder(self, T):
         """
         Internal recursive method to perform Pre-Order Traversal.
@@ -177,8 +196,21 @@ class BSTRef:
         result = "{} {} {}".format(r1,r2,r3)
         return result
 
-    def prettyPrint(self, T):
-        self._prettyPrint(T, 0)
+    def traversal(self, which):
+        """
+        Print the BST by the specified traversal.
+
+        [which] should be one of the Enumeration in the Traversal Enum class
+        """
+        if which == Traversal.PRE:
+            return "[%d nodes]="%self._size+self._preorder(self._root) 
+        elif which == Traversal.IN:
+            return "[%d nodes]="%self._size+self._inorder(self._root)
+        elif which == Traversal.POST:
+            return "[%d nodes]="%self._size+self._postorder(self._root)
+
+    def prettyPrint(self):
+        self._prettyPrint(self._root, 0)
         pass
 
     def _prettyPrint(self, T, height):
@@ -198,20 +230,65 @@ class BSTRef:
         print("{0}{1}{2}".format(spacing,T.key,dash))
 
         self._prettyPrint(T.leftT, height+1)
-
-    def traversal(self, which):
-        """
-        Print the BST by the specified traversal.
-
-        [which] should be one of the Enumeration in the Traversal Enum class
-        """
-        if which == Traversal.PRE:
-            return "[%d nodes]="%self._size+self._preorder(self._root) 
-        elif which == Traversal.IN:
-            return "[%d nodes]="%self._size+self._inorder(self._root)
-        elif which == Traversal.POST:
-            return "[%d nodes]="%self._size+self._postorder(self._root)
     
+    def pathSum(self):
+        pathSum = self._pathSum(self._root, 0)
+
+        print('pathSum: {}'.format(pathSum))
+        pass
+
+    def _pathSum(self, T, sum_):
+
+        # In case left is empty
+        if T == None:
+            return sum_
+
+        # Start to unwind when T is not a leaf
+        if T.leftT == None and T.rightT == None:
+            return sum_ + T.key
+        
+        # Accumulate the sum when it winding down 
+        # Assign the right nodes value to sum_
+        sum_ = self._pathSum(T.leftT, sum_ + T.key)
+
+        # Only add its right Node value
+        # Start to excute in each time at each unwind point
+        sum_ = self._pathSum(T.rightT, sum_)
+
+        return sum_
+        pass
+
+    def _flipTree(self, oldT, newT):
+        if oldT == None:
+            return
+        
+        if oldT.rightT == None and oldT.leftT == None:
+            # copy the value as a new node
+            return TreeNode(oldT.key, oldT.data)
+
+        if newT.leftT != None:
+            newT.rightT = TreeNode(oldT.leftT.key, oldT.leftT.data)
+        
+        self._flipTree(oldT.leftT, newT)
+        # newT = TreeNode(oldT.key, oldT.data)
+        newT.leftT = self._flipTree(oldT.rightT, newT)
+
+        return newT
+        pass
+
+    def flipTree(self):
+        '''
+        return the mirror image of T
+        '''
+
+        # root remains the same 
+        newTree = TreeNode(self._root.key, self._root.data)
+
+        flippedTree = self._flipTree(self._root, newTree)
+
+        return flippedTree
+        pass
+
 def main():
     bt = BSTRef()
 
@@ -224,17 +301,15 @@ def main():
     bt.insert(9,"Nine")
     bt.insert(2,"Two")
     bt.insert(6,"Six")
+
+    print(bt.traversal(Traversal.PRE))
+    print(bt.traversal(Traversal.IN))
+    print(bt.traversal(Traversal.POST))
+    print("Min = "+str(bt.findMinElement()))
+    bt.prettyPrint()
+
     
-    bt.prettyPrint(bt._root)
-
-    # print(bt.traversal(Traversal.PRE))
-    # print(bt.traversal(Traversal.IN))
-    # print(bt.traversal(Traversal.POST))
-    # print(bt.traversal(Traversal.PRETTY))
-    # print("Min = "+str(bt.findMinElement()))
-
-    # bt.delete(4)
-    # print(bt.traversal(Traversal.PRE))
+    print(bt.traversal(Traversal.PRE))
 
     # bt.delete(3)
     # print(bt.traversal(Traversal.PRE))
@@ -244,6 +319,18 @@ def main():
 
     # bt.delete(8)
     # print(bt.traversal(Traversal.PRE))
+
+    bt.prettyPrint()
+
+    bt.pathSum()
+
+    flippedTree = bt.flipTree()
+
+    print('Flipped Tree')
+    bt._prettyPrint(flippedTree, 0)
+
+
+
 
 if __name__ == "__main__":
     main()

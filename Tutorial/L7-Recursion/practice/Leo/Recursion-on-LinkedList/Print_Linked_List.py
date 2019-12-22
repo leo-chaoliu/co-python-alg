@@ -52,9 +52,9 @@ def countIf(head, target):
     pass
 
 def main():
-    node1 = SinglyNode(0)
-    node2 = SinglyNode(0)
-    node3 = SinglyNode(0)
+    node1 = SinglyNode(2)
+    node2 = SinglyNode(2)
+    node3 = SinglyNode(2)
 
     ll = LinkedList()
     ll.head = node1

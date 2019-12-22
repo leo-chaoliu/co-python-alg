@@ -98,16 +98,13 @@ class BSTRef:
             raise KeyError("Cannot Find Key Error")
         
         # Find the deletion location
-
         if T.key < key:
-            right = self._delete(T.rightT,key)
-            T.rightT = right
-            return T
-
+            T.rightT = self._delete(T.rightT,key)
+            # return T
+            
         elif T.key > key:
-            left = self._delete(T.leftT,key)
-            T.leftT = left
-            return T
+            T.leftT = self._delete(T.leftT,key)
+            # return T
          
         # Arrived the deletion location
         else:    
@@ -128,19 +125,14 @@ class BSTRef:
                 s = self._findMin(T.rightT)
                 T.key = s.key
                 T.data = s.data
-                self._delete(T.rightT,s.key)
-            
-            # return T
+                T.rightT = self._delete(T.rightT,s.key)
+            return T
 
-    def deletion(self, key):
+    def delete(self, key):
         """
         Detele node with [key] from BST.
         """
-        # self._delete(self._root, key)
-        self._size -= 1
-
-    def test(self, number):
-        self._delete(self._root, number)
+        self._delete(self._root,key)
         self._size -= 1
     
     def _preorder(self, T):
@@ -186,6 +178,28 @@ class BSTRef:
         result = "{} {} {}".format(r1,r2,r3)
         return result
 
+    def prettyPrint(self, T):
+        self._prettyPrint(T, 0)
+        pass
+
+    def _prettyPrint(self, T, height):
+        """
+        Internal recursive method to perform prettyPrint Traversal.
+        """
+        if T == None:
+            return height
+       
+        self._prettyPrint(T.rightT, height+1)
+
+        dash = ""
+        if T.leftT != None or T.rightT != None:
+            dash = "---"
+
+        spacing = height * "    "
+        print("{0}{1}{2}".format(spacing,T.key,dash))
+
+        self._prettyPrint(T.leftT, height+1)
+
     def traversal(self, which):
         """
         Print the BST by the specified traversal.
@@ -212,26 +226,27 @@ def main():
     bt.insert(2,"Two")
     bt.insert(6,"Six")
 
-    # print(bt.traversal(Traversal.PRE))
-    bt.test(5)
     print(bt.traversal(Traversal.PRE))
-
-    # print(bt.traversal(Traversal.PRE))
-    # print(bt.traversal(Traversal.IN))
-    # print(bt.traversal(Traversal.POST))
-    # print("Min = "+str(bt.findMinElement()))
+    print(bt.traversal(Traversal.IN))
+    print(bt.traversal(Traversal.POST))
+    print("Min = "+str(bt.findMinElement()))
+    bt.prettyPrint(bt._root)
 
     
-    # print(bt.traversal(Traversal.PRE))
+    print(bt.traversal(Traversal.PRE))
 
-    # bt.delete(3)
-    # print(bt.traversal(Traversal.PRE))
+    bt.delete(3)
+    print(bt.traversal(Traversal.PRE))
 
     # bt.delete(1) 
     # print(bt.traversal(Traversal.PRE))
 
     # bt.delete(8)
     # print(bt.traversal(Traversal.PRE))
+
+    bt.prettyPrint(bt._root)
+
+
 
 if __name__ == "__main__":
     main()
