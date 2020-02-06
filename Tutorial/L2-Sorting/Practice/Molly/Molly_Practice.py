@@ -181,8 +181,8 @@ def main():
     # sort = bubbleSort
     #sort = bubbleSortEarly
     # sort = mergeSortHelper
-    # sort = quickSortHelper
-    sort = radixSort
+    sort = quickSortHelper
+    # sort = radixSort
 
     #uncomment one or more sorting examples below
     # sort(array1)
